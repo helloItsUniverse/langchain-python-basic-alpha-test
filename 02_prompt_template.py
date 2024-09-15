@@ -14,3 +14,17 @@ prompt = PromptTemplate(
 openai = ChatOpenAI(model="gpt-3.5-turbo",
                     api_key=os.getenv("OPENAI_API_KEY"), 
                     temperature=0.7)
+
+# | 기호를 사용하여 프롬프트와 llm을 연결할 수 있습니다.
+chain = prompt | openai
+
+# 사용자의 리뷰에 대한 평가를 요청합니다.
+try:
+    response = chain.invoke({
+        "review": "사과네 피자 치킨을 전부 남겼습니다!",
+        "rating1": "1",
+        "rating2": "5"
+    })
+    print(f"평가 결과: {response}")
+except Exception as e:
+    print(f"Error: {e}")
